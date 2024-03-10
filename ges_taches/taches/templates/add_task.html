@@ -7,7 +7,7 @@
 
 <p>Veuillez entrer les informations liées à la nouvelle tâche.</p>
 
-<form method="POST" action="{% url 'add_task' id=user.id %}">
+<form method="POST" action="{% url 'add_task'%}">
     
     {% csrf_token %}
     

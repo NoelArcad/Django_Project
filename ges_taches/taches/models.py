@@ -3,11 +3,11 @@ from django.core.exceptions import ValidationError
 
 class Task(models.Model):
     name_task = models.CharField(null=True, max_length=255)
-    des_task = models.CharField(required=False, null=True, max_length=455)
+    des_task = models.CharField(null=True, max_length=455)
     start_date_task = models.DateField(null=True)
     start_time_task = models.TimeField(null=True)
-    end_date_task = models.DateField(required=False, null=True)
-    end_time_task = models.TimeField(required=False, null=True)
+    end_date_task = models.DateField(null=True)
+    end_time_task = models.TimeField(null=True)
     statut_task = models.CharField(null=True, max_length=255)
 
     def validation_task(self):

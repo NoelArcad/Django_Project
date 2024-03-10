@@ -5,36 +5,39 @@
 </head>
 <body>
 
-<form method='POST' action="{% url 'modify_task' id=mytask.id %}">
-    {% csrf_token %}
+    {% for x in mytask %}
+
+        <form method='POST' action="{% url 'modify_task' x.id %}">
+        {% csrf_token %}
+
+            <label for="name_task", required="x.name_task">Nom de la tâche :</label>
+            <input type="text" name="name_task" value="{{ x.name_task }}" required><br>
+
+            <label for="des_task", required="x.des_task">Description de la tâche :</label>
+            <textarea name="des_task" rows="4" cols="50" required>{{ x.des_task }}</textarea><br>
+
+            <label for="start_date_task", required="x.start_date_task">Date de début de la tâche :</label>
+            <input type="date" name="start_date_task" value="{{ x.start_date_task }}" required><br>
     
-    <label for="name_task", required="mytask.name_task">Nom de la tâche :</label>
-    <input type="text" name="name_task" value="{{ mytask.name_task }}" required><br>
+            <label for="start_time_task", required="x.start_time_task">Heure de début de la tâche :</label>
+            <input type="time" name="start_time_task" value="{{ x.start_time_task }}" required><br>
 
-    <label for="des_task", required="mytask.des_task">Description de la tâche :</label>
-    <textarea name="des_task" rows="4" cols="50" required>{{ mytask.des_task }}</textarea><br>
+            <label for="end_date_task", required="x.end_date_task">Date de fin de la tâche :</label>
+            <input type="date" name="end_date_task" value="{{ x.end_date_task }}" required><br>
 
-    <label for="start_date_task", required="mytask.start_date_task">Date de début de la tâche :</label>
-    <input type="date" name="start_date_task" value="{{ mytask.start_date_task }}" required><br>
-    
-    <label for="start_time_task", required="mytask.start_time_task">Heure de début de la tâche :</label>
-    <input type="time" name="start_time_task" value="{{ mytask.start_time_task }}" required><br>
+            <label for="end_time_task", required="x.end_time_task">Heure de fin de la tâche :</label>
+            <input type="time" name="end_time_task" value="{{ x.end_time_task }}" required><br>
 
-    <label for="end_date_task", required="mytask.end_date_task">Date de fin de la tâche :</label>
-    <input type="date" name="end_date_task" value="{{ mytask.end_date_task }}" required><br>
+            <label for="statut_task", required="x.statut_task">Statut :</label>
+            <select id="statut_task" name="statut_task">
+                <option value="Non démarré">Non démarré</option>
+                <option value="En cours">En cours</option>
+                <option value="Terminé">Terminé</option>
+             </select>
 
-    <label for="end_time_task", required="mytask.end_time_task">Heure de fin de la tâche :</label>
-    <input type="time" name="end_time_task" value="{{ mytask.end_time_task }}" required><br>
-
-    <label for="statut_task", required="mytask.statut_task">Statut :</label>
-    <select id="statut_task" name="statut_task">
-        <option value="Non démarré">Non démarré</option>
-        <option value="En cours">En cours</option>
-        <option value="Terminé">Terminé</option>
-    </select>
-
-    <input type="submit" value="Enregistrer les modifications">
-</form>
+            <input type="submit" value="Enregistrer les modifications">
+        </form>
+    {% endfor %}        
 
 </body>
 </html>

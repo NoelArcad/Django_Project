@@ -4,19 +4,20 @@
     <title>Détails complets de la tâche</title>
 </head>
 <body>
+    {% for x in mytask %}
+        <p>Nom de la tâche: {{ x.name_task }}</p>
+        <p>Description de la tâche: {{ x.des_task }}</p>
+        <p>Date de début: {{ x.start_date_task }}</p>
+        <p>Heure de début: {{ x.start_time_task }}</p>
+        <p>Date de fin: {{ x.end_date_task }}</p>
+        <p>Heure de fin: {{ x.end_time_task }}</p>
+        <p>Statut: {{ x.statut_task }}</p><br>
 
-    <p><strong>Nom de la tâche:</strong> {{ mytask.name_task }}</p>
-    <p><strong>Description de la tâche:</strong> {{ mytask.des_task }}</p>
-    <p><strong>Date de début:</strong> {{ mytask.start_date_task }}</p>
-    <p><strong>Heure de début:</strong> {{ mytask.start_time_task }}</p>
-    <p><strong>Date de fin:</strong> {{ mytask.end_date_task }}</p>
-    <p><strong>Heure de fin:</strong> {{ mytask.end_time_task }}</p>
-    <p><strong>Statut:</strong> {{ mytask.statut_task }}</p>
-
-    <a href="/modify_task/{{ id }}">Modifier la tâche</a>
-    <a href="/delete_task/{{ id }}">Supprimer la tâche</a>
-    <a href="">Retourner à l'historique des tâches</a>
-
+        <li> <a href="/modify_task/{{ x.id }}">Modifier la tâche</a></li><br>
+        <li> <a href="/delete_task/{{ x.id }}">Supprimer la tâche</a></li><br>
+        <li> <a href="/">Retourner à l'historique des tâches</a></li>
+        
+    {% endfor %}
 </body>
 </html>
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
 from django.template import loader
-from .models import Task, User
+from .models import Task
 
 def main(request):
     template = loader.get_template('main.html')  
@@ -47,10 +47,10 @@ def modify_task(request, id):
         end_date_task = request.POST['end_date_task']
         end_time_task = request.POST['end_time_task'] 
         statut_task = request.POST['statut_task'] 
-        new_task = Task(name_task=name_task, des_task=des_task, start_date_task=start_date_task, start_time_task=start_time_task, end_date_task=end_date_task, end_time_task=end_time_task, statut_task=statut_task)
+        new_task = Task(id=id, name_task=name_task, des_task=des_task, start_date_task=start_date_task, start_time_task=start_time_task, end_date_task=end_date_task, end_time_task=end_time_task, statut_task=statut_task)
         new_task.save()
         return redirect('main')
-    return render(request, 'modify.task.html', context)
+    return render(request, 'modify_task.html', context)
     
 
 def delete_task(request, id):
@@ -58,7 +58,8 @@ def delete_task(request, id):
     template = loader.get_template('delete_task.html')  
     context = {'mytask': mytask} 
     if request.method == 'POST':
-        bad_task = Task(id=id)
+        id = request.POST['id']
+        bad_task = Task.objects.all()[id]
         bad_task.delete()
         return redirect('main')
     return render(request, 'delete_task.html', context)
