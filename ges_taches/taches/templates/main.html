@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Historique des tâches</title>
+    </head>
+    <body>    
+      {% for x in mytask %}
+         <li> <a href="/display_details_tasks/{{ x.id }}">Tâche {{ x.id }}: {{ x.name_task }}; Statut: {{ x.statut }}</a></li>
+      {% endfor %}
+    
+    <p><a href="add_task/">Ajouter une tâche</a></p>
+
+    </body>
+</html>

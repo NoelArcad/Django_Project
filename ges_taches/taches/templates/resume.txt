@@ -1,0 +1,187 @@
+views:
+
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.hashers import check_password
+from django.template import loader
+from .models import Task, User
+
+def main(request):
+    template = loader.get_template('main.html')
+    return HttpResponse(template.render())
+    
+   
+
+def create_account(request):
+    account = User.objects.all().values()
+    mytask = Task.objects.all().values()
+    template = loader.get_template('create_account.html')
+    context = {
+    'account': account,
+    'mytask': mytask,
+}
+
+    if request.method == 'POST':
+        user_name = request.POST['user_name']
+        user_password = request.POST['user_password']
+
+        user_existant = User.objects.filter(user_name=user_name).exists()
+
+        if user_existant:
+            print("Le nom d'utilisateur entré existe déjà. Veuillez recommencer.")
+            return redirect('create_account')
+        else:
+            new_user = User(user_name=user_name, user_password=user_password)
+            new_user.save()
+            print("Votre compte a bien été créé.")
+            return redirect('connect_account')
+
+    return render(request, 'create_account.html', context)
+
+def connect_account(request):
+    account = User.objects.all().values()
+    template = loader.get_template('connect_account.html')
+    context = {'account': account}
+
+    if request.method == 'POST':
+        user_name = request.POST['user_name']
+        user_password = request.POST['user_password']
+
+        user_existant = User.objects.filter(user_name=user_name).exists()
+
+        if user_existant:
+            user = User.objects.get(user_name=user_name)
+            id = user.id
+            if user_password == user.user_password:
+                print("Mot de passe correct")
+                return redirect('add_task', id=id)
+            else:
+                print("Mot de passe incorrect. Veuillez recommencer.")
+                return redirect('connnecter_compte')
+        else:
+            print("Le nom d'user entré n'est pas correct.")
+            return redirect('create_account')
+
+    return render(request, 'connect_account.html', context)
+
+def display_tasks(request, id):
+    user = User.objects.get(id=id)
+    mytask = Task.objects.filter(pers=user)
+    template = loader.get_template('display_tasks.html')
+    context = {'user': user, 'mytask': mytask}
+    return render(request, 'display_tasks.html', context)
+
+def add_task(request, id):
+    user = User.objects.get(id=id)
+    mytask = Task.objects.filter(pers=user)
+    template = loader.get_template('add_task.html')  
+    context = {'user': user, 'mytask': mytask} 
+    if request.method == 'POST':
+        name_task = request.POST['name_task']
+        des_task = request.POST['des_task']
+        start_date_task = request.POST['start_date_task']
+        start_time_task = request.POST['start_time_task']
+        end_date_task = request.POST['end_date_task']
+        end_time_task = request.POST['end_time_task'] 
+        new_task = Task(pers=user, name_task=name_task, des_task=des_task, start_date_task=start_date_task, start_time_task=start_time_task, end_date_task=end_date_task, end_time_task=end_time_task)
+        new_task.save()
+        return redirect('display_tasks', id=id)
+    return render(request, 'add_task.html', context)
+
+def display_details_tasks(request, id, task):
+    user = User.objects.get(id=id)
+    template = loader.get_template('display_details_tasks.html')
+    mytask = Task.objects.filter(pers=user, id_task=id_task)
+    context = {'mytask': mytask}
+    return render(request, 'display_details_tasks.html', context)
+    
+def modify_task(request, id):
+    account = User.objects.all().values()
+    template = loader.get_template('connect_account.html')
+    context = {'account': account}
+    if request.method == 'POST':       
+        task = Task.objects.get(pers=id)
+        task.name_task = request.POST['name_task']
+        task.des_task = request.POST['des_task']
+        task.start_date_task = request.POST['start_date_task']
+        task.start_time_task = request.POST['start_time_task']
+        task.end_date_task = request.POST['end_date_task']
+        task.end_time_task = request.POST['end_time_task']        
+        task.save()      
+        return redirect('display_details_tasks', id=id)
+        
+        
+        
+        
+        
+        
+models.py:
+
+
+from django.db import models
+from django.core.exceptions import ValidationError
+
+class Task(models.Model):
+    name_task = models.CharField(null=True, max_length=255)
+    des_task = models.CharField(null=True, max_length=455)
+    start_date_task = models.DateField(null=True)
+    start_time_task = models.TimeField(null=True)
+    end_date_task = models.DateField(null=True)
+    end_time_task = models.TimeField(null=True)
+    statut = models.CharField(null=True, max_length=255)
+
+    def validation_task(self):
+        if self.start_date_task and self.end_date_task and self.start_time_task and self.end_time_task:
+            if self.start_date_task < self.end_date_task or (self.start_date_task == self.end_date_task and self.start_time_task < self.end_time_task):
+                return True
+        return True
+
+    def save(self, *args, **kwargs):
+        if not self.validation_task():
+            raise ValidationError('La validation de la tâche a échoué.')
+        super().save(*args, **kwargs)
+
+
+
+
+
+
+
+urls.py:
+
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.main, name='main'),
+    path('create_account/', views.create_account, name='create_account'),
+    path('connect_account/', views.connect_account, name='connect_account'),
+    path('display_tasks/', views.display_tasks, name='display_tasks'),
+    path('add_task/', views.add_task, name='add_task'),
+    path('display_tasks/<int:id>/', views.display_details_tasks, name='display_details_tasks'),
+    path('modify_task/<int:id>/', views.modify_task, name='modify_task'),
+    
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+        
+    
+    return render(request, 'modify_task.html', {'id': id})
+
+    
+
+

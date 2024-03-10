@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajouter une tâche</title>
+</head>
+<body>
+
+<p>Veuillez entrer les informations liées à la nouvelle tâche.</p>
+
+<form method="POST" action="{% url 'add_task' id=user.id %}">
+    
+    {% csrf_token %}
+    
+    <label for="name_task">Nom :</label>
+    <input type="text" name="name_task" maxlength="255" required><br>
+
+    <label for="des_task">Description :</label>
+    <input type="text" name="des_task" rows="8" cols="30" maxlength="255" required><br>
+
+    <label for="start_date_task">Date de début :</label>
+    <input type="date" name="start_date_task" required><br>
+    
+    <label for="start_time_task">Heure de début :</label>
+    <input type="time" name="start_time_task" required><br>
+
+    <label for="end_date_task">Date de fin :</label>
+    <input type="date" name="end_date_task" required><br>
+
+    <label for="end_time_task">Heure de fin :</label>
+    <input type="time" name="end_time_task" required><br>
+
+    <label for="statut_task">Statut :</label>
+    <select id="statut_task" name="statut_task">
+        <option value="Non démarré">Non démarré</option>
+        <option value="En cours">En cours</option>
+        <option value="Terminé">Terminé</option>
+    </select>
+
+    <input type="submit" value="Ajouter la tâche">
+</form>
+
+</body>
+</html>
+

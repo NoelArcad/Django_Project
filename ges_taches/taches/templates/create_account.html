@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inscription</title>
+</head>
+<body>
+
+<form method="POST" action="{% url 'create_account' %}">
+    
+    {% csrf_token %}
+    
+    <label for="user_name">Nom d'utilisateur :</label>
+    <input type="text" name="user_name" required><br>
+
+    <label for="user_password">Mot de passe :</label>
+    <input type="password" name="user_password" required><br>
+
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <input type="submit" value="Créer un compte">
+</form>
+
+</body>
+</html>
+

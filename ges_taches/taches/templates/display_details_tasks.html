@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Détails complets de la tâche</title>
+</head>
+<body>
+
+    <p><strong>Nom de la tâche:</strong> {{ mytask.name_task }}</p>
+    <p><strong>Description de la tâche:</strong> {{ mytask.des_task }}</p>
+    <p><strong>Date de début:</strong> {{ mytask.start_date_task }}</p>
+    <p><strong>Heure de début:</strong> {{ mytask.start_time_task }}</p>
+    <p><strong>Date de fin:</strong> {{ mytask.end_date_task }}</p>
+    <p><strong>Heure de fin:</strong> {{ mytask.end_time_task }}</p>
+    <p><strong>Statut:</strong> {{ mytask.statut_task }}</p>
+
+    <a href="/modify_task/{{ id }}">Modifier la tâche</a>
+    <a href="/delete_task/{{ id }}">Supprimer la tâche</a>
+    <a href="">Retourner à l'historique des tâches</a>
+
+</body>
+</html>
+

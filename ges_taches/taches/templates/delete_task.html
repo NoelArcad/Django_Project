@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Suppression de la tâche</title>
+   </head>
+  <body>    
+    Pour confirmer la suppression de la tâche {{ mytask.name_task }}, cliquez ici.
+    <form method='POST' action="{% url 'main'%}"></form>
+
+      <input type="submit" value="Supprimer la tâche">
+    </form>
+
+  </body>
+</html>

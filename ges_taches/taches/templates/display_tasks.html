@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historique des tâches</title>
+</head>
+<body>
+  {% for x in mytask %}
+     <li><a href="connect_account/display_tasks/display_details_tasks/{{ id }}">{{ x.name_task }}</a></li>
+  {% endfor %}
+
+</body>
+
+</html>
+
