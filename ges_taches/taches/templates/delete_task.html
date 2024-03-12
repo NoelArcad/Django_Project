@@ -6,11 +6,11 @@
   </head>
   <body>  
     {% for x in mytask %}
-      <form method='POST' action="{% url 'delete_task' x.id %}"></form>
+      <form method='POST' action="{% url 'delete_task' x.id %}">
       {% csrf_token %}
         
         Pour confirmer la suppression de la tâche {{ x.name_task }}, cliquez ici.
-        <input type="int" name="id" value="{{ x.id }}"><br>
+        
         <input type="submit" value="Supprimer la tâche">
       </form>
     {% endfor %}

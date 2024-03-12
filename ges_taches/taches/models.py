@@ -14,7 +14,7 @@ class Task(models.Model):
         if self.start_date_task and self.end_date_task and self.start_time_task and self.end_time_task:
             if self.start_date_task < self.end_date_task or (self.start_date_task == self.end_date_task and self.start_time_task < self.end_time_task):
                 return True
-        return True
+        return False
 
     def save(self, *args, **kwargs):
         if not self.validation_task():

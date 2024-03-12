@@ -58,8 +58,8 @@ def delete_task(request, id):
     template = loader.get_template('delete_task.html')  
     context = {'mytask': mytask} 
     if request.method == 'POST':
-        id = request.POST['id']
-        bad_task = Task.objects.all()[id]
-        bad_task.delete()
+        for x in mytask:
+             
+            x.delete()
         return redirect('main')
     return render(request, 'delete_task.html', context)
